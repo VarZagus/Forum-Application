@@ -1,0 +1,18 @@
+<style>
+#delete{
+    position:relative;
+    left: 500px;
+}
+
+#cancel{
+    position:relative;
+    top: 30px;
+    right: 100px;
+}
+</style>
+
+<h1>Редактирование поста</h1>
+
+<%= render 'form', post: @post %>
+<span id="delete"><%= link_to 'Удалить пост', @post, method: :delete, data: { confirm: 'Вы уверены?' } %></span>
+<span id="cancel"><%= link_to 'Отмена', @post %></span>

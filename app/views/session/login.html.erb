@@ -1,0 +1,36 @@
+<style>
+  #reg{
+      position:relative;
+      top:15px;
+      left: 40px;
+      font-size: 15px;
+  }
+  .container{
+      margin-left: 700px;
+  }
+  .form-control{
+      width: 250px;
+  }
+  .btn-primary{
+      margin-top: 20px;
+      width:70px;
+      height: 35px;
+      font-size:15px;
+  }
+   .back{
+    position:absolute;
+    font-size:20px;
+  }
+</style>
+<span class="back"><%=link_to 'К списку постов',root_path %></span>
+<div class="container">  
+<%= form_with url: session_create_url, method: :post, local: true do |f| %>
+    <%=label_tag ("Логин")%>
+    <%= f.text_field :login, required: true, label: 'Логин', class: "form-control" %>
+    <%=label_tag ("Пароль")%>
+    <%= f.password_field :password, required: true, label: 'Пароль', class: "form-control" %>
+    <%= f.submit 'Войти', class: "btn-primary" %>
+<% end %>
+
+<span id="reg"><%= link_to 'Зарегистрироваться', new_user_path %></span>
+</div>

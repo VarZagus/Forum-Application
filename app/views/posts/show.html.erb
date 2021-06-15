@@ -1,0 +1,152 @@
+<script type="text/javascript">
+
+var time = setInterval(function() {
+  var date = new Date();
+  var hours = date.getHours();
+  var mins = date.getMinutes();
+  var sec = date.getSeconds();
+  var res="Текущее время: ";
+  if (hours < 10) res+= "0" + hours + ":";
+  else res+=hours + ":";
+  if (mins < 10) res+= "0" + mins + ":";
+  else res+=mins + ":";
+  if (sec < 10) res+= "0" + sec;
+  else res+=sec;
+  document.getElementById("time").innerHTML = (res);
+}, 20);
+
+</script>
+
+
+<head>
+  <style>
+   #time{
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    left: 800px;
+    font-weight: bold;
+
+  }
+  #add-com{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  #enter{
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+  }
+  .form-control{
+    height: 100px;
+    width: 500px;
+    margin-bottom: 5px;
+  }
+  #com-title{
+    font-weight: bold;
+    font-size: 30px;
+  }
+  .comments{
+    padding-top: 40px;
+    padding-left: 100px;
+  }
+  .text{
+    padding: 10px;
+    padding-left: 20px;
+    padding-top:20px;
+    font-size: 20px;
+  }
+
+  .edit{
+    float:right;
+    position:absolute;
+    top: 125px;
+    left: 1200px;
+    font-size: 20px;
+  }
+  .author{
+    padding: 15px;
+    padding-left: 0px;
+    font-size: 35px;
+  }
+  .author-name{
+    font-weight: bold;
+  }
+
+  .title{
+    font-size: 35px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+  }
+  .back{
+    position:absolute;
+    font-size:20px;
+  }
+  .exit{
+    position:relative;
+    left: 1650px;
+    font-size: 20px;
+
+  }
+  .post{
+    background-color: Gainsboro;
+    margin-top: 50px;
+    margin-left: 300px;
+    padding-bottom: 20px;
+  }
+  .post-name{
+    font-size: 30px;
+  }
+
+  .login{
+    position:relative;
+    left:1650px;
+    font-size: 20px;
+  }
+  .username{
+    position:relative;
+    left: 1550px;
+    font: bold, serif;
+    font-size: 25px;
+  }
+  </style>
+</head>
+<header>
+  <% if current_user%>
+    <span class="username"><%= current_user.username%></span>
+    <span class = "exit"><%= link_to 'Выйти', session_logout_path %></span>
+  <% else %>
+     <span class="login"><%=link_to 'Войти', session_login_path %></span>
+  <% end %>
+  <span class="back"><%=link_to 'К списку постов',root_path %></span>
+</header>
+<div id ="time"></div>
+<div class = "post container">
+  <p id="notice"><%= notice %></p>
+  <div class = "author">Автор:<span class="author-name"><%= @post.user.username %></div></span>
+  <div class='title'>Тема: <%= @post.title%></div>
+  <div class="text"><%= @post.text %></div>
+  <% if current_user&.username == @post.user.username || current_user&.is_admin%>
+     <div class="edit"><%= link_to 'Удалить пост', @post, method: :delete, data: { confirm: 'Вы уверены?' } %></div>
+  <% end %>
+</div>
+
+<div class ="comments">
+    <span id="com-title">Комментарии</span>
+       <% @comments.each do|comment|%>
+         <div class = "com">
+            <strong><%= comment.user.username%></strong>
+            <p><%= comment.text %></p>
+          </div>
+        <% end %>
+    <% if current_user%>
+      <%= form_with url: comment_path(@post), method: :post, local: true do %>
+        <span id="add-com"><%= label_tag("Введите комментарий") %></span>
+        <textarea id="text" name ="text" type="text" class="form-control"></textarea>
+        <%= submit_tag("Отправить",class: "btn-primary")%>
+      <% end %>
+    <% else %>
+      <span id="enter"><%=link_to 'Войдите, чтобы написать комментарий', session_login_path %></span>
+    <% end %>
+
+</div>

@@ -1,0 +1,16 @@
+<style>
+  h1{
+      text-align: center;
+  }
+  #back{
+      position:relative;
+      font-size: 25px;
+      bottom: 300px;
+      left: 400px;
+  }
+</style>
+<h1>Регистрация пользователя</h1>
+
+<%= render 'form', user: @user %>
+
+<span id="back"><%= link_to 'Вернуться', users_path %></span>

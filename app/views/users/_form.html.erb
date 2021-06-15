@@ -1,0 +1,77 @@
+<script type="text/javascript">
+
+var time = setInterval(function() {
+  var date = new Date();
+  var hours = date.getHours();
+  var mins = date.getMinutes();
+  var sec = date.getSeconds();
+  var res="Текущее время: ";
+  if (hours < 10) res+= "0" + hours + ":";
+  else res+=hours + ":";
+  if (mins < 10) res+= "0" + mins + ":";
+  else res+=mins + ":";
+  if (sec < 10) res+= "0" + sec;
+  else res+=sec;
+  document.getElementById("time").innerHTML = (res);
+}, 20);
+
+</script>
+
+<style>
+  #time{
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    left: 800px;
+    font-weight: bold;
+
+  }
+  .form-control{
+    width: 250px;
+  }
+  .btn-primary{
+    margin-top: 20px;
+    width:150px;
+    height: 35px;
+    font-size:15px;
+  }
+  .container{
+    padding-top: 20px;
+    margin-left: 760px;
+  }
+</style>
+<div id ="time"></div>
+<div class = "container">
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username, class: "form-control"  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password, required: true, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, required: true, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Создать", class: "btn-primary" %>
+  </div>
+<% end %>
+</div>

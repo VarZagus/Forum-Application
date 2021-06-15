@@ -1,0 +1,13 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+Metrics/MethodLength:
+  Max: 50
+Layout/LineLength:
+  Max: 1000
+Metrics/AbcSize:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
